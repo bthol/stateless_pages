@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#title#</title>
+</head>
+<body>
+    <header style="border-bottom: 1px solid black; padding: 8px 0px; display: flex; justify-content: space-between; align-items: center;">
+        <h2>#websiteTitle#</h2>
+        <div>
+            <button>button</button>
+            <button>button</button>
+            <button>button</button>
+        </div>
+    </header>
+    <div class="layout" style="display: grid; grid-template-columns: 1fr 3.5fr;">
+        <aside style="border-right: 1px solid black; padding-right: 8px;border-radius: 0px 25px 0px 0px;">
+            <h3>label</h3>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button>button</button>
+                <button>button</button>
+                <button>button</button>
+            </div>
+            <h3>label</h3>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button>button</button>
+                <button>button</button>
+                <button>button</button>    
+            </div>
+        </aside>
+        <main style="padding-left: 8px;">
+            <h1>#pageTitle#</h1>
+            <section>
+                <h2>Section Title</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
+            </section>
+        </main>
+    </div>
+    <footer>
+        <hr>
+        <center><small>&copy; #copyrightYear#, #copyrightName#. All rights reserved.</small></center>
+    </footer>
+
+    <script defer>
+        // a short script to ensure that the content height is never shorter than the screen height
+        if (window.innerHeight > Math.max(document.body.clientHeight, document.body.offsetHeight)) {
+            document.body.setAttribute('style', 'height: calc(100vh - 16px)');
+            document.querySelector('footer').setAttribute('style', 'position: absolute; bottom: 0px; width: calc(100vw - 16px);');
+        } else {
+            document.body.setAttribute('style', 'height: max-content');
+            document.querySelector('footer').setAttribute('style', 'position: inherit;');
+        }
+        window.addEventListener('resize', () => {
+            if (window.innerHeight > Math.max(document.body.clientHeight, document.body.offsetHeight)) {
+                document.body.setAttribute('style', 'height: calc(100vh - 16px)');
+                document.querySelector('footer').setAttribute('style', 'position: absolute; bottom: 0px; width: calc(100vw - 16px);');
+            } else {
+                document.body.setAttribute('style', 'height: max-content');
+                document.querySelector('footer').setAttribute('style', 'position: inherit; width: width: calc(100vw - 16px);');
+            }
+        });
+    </script>
+    <style>
+        p {
+            text-indent: 3vmin;
+        }
+    </style>
+</body>
+</html>
