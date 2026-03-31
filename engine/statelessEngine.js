@@ -1,5 +1,6 @@
-// Custom Engine for stateless rendering
-module.exports.renderStateless = renderStateless = (filePath, options, handler) => {
+// Custom Engine for Template Rendering
+module.exports.renderPage = renderPage = (filePath, options, handler) => {
+    
     // validate user arguments
     if (filePath === undefined || filePath === null || typeof(filePath) !== "string") {
         return handler('invalid argument: filePath');
@@ -8,6 +9,7 @@ module.exports.renderStateless = renderStateless = (filePath, options, handler) 
     } else if (handler === undefined || handler === null || typeof(handler) !== "function") {
         return handler('invalid argument: handler');
     }
+
     // import file system module
     const fs = require('fs');
     fs.readFile(filePath, (error, content) => {
@@ -43,11 +45,9 @@ module.exports.renderStateless = renderStateless = (filePath, options, handler) 
                     }
                     if (!cont) {break};
                 }
-
-                console.log(keyStructure);
     
                 if (keyStructure.length > 0 && index + 2 < demarcatedLength) {
-                    // is options
+                    // is options (plural options)
     
                     for (let i = index + 2; i < demarcatedLength; i += 2) {
                         const key = demarcated[i];
@@ -80,16 +80,17 @@ module.exports.renderStateless = renderStateless = (filePath, options, handler) 
                     }
     
                     // send rendered content to handler
-                    console.log('rendered');
+                    console.log('rendered: with plural parameters');
                     return handler(null, render);
                     
                 } else {
-                    // isn't options (not plural; only 1)
+
+                    // isn't options (singular option)
                     const key = keyStructure[0][0];
                     const render = stringed.replace(`${demarcator}${key}${demarcator}`, `${options[key]}`);
     
                     // send rendered content to handler
-                    console.log('rendered');
+                    console.log('rendered: with singular parameter');
                     return handler(null, render);
                 }
 
@@ -97,7 +98,7 @@ module.exports.renderStateless = renderStateless = (filePath, options, handler) 
                 // over maximum 10,000 demarcators
 
                 // send rendered content to handler
-                console.log('rendered');
+                console.log('rendered: over maximum of 10,000 demarcators');
                 return handler(null, stringed);
             }
 
@@ -105,7 +106,7 @@ module.exports.renderStateless = renderStateless = (filePath, options, handler) 
             // isn't keys
 
             // send rendered content to handler
-            console.log('rendered');
+            console.log('rendered: no keys, no problem');
             return handler(null, stringed);
         }
     });
