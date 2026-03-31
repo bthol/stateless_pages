@@ -25,7 +25,8 @@ console.log('Stateless Pages Engine set as default template engine');
 
 // Engine Parameters
 const parameters = {
-  demarcator: '#', // keep demarcator as a single character unique to HTML syntax
+  demarcator: '#', // keep demarcator as a single character unique to HTML syntax; deafult = '#'
+  testParameter: 'If you can read this, the test has passed.',
   title: 'Title',
   websiteTitle: 'Website Title',
   pageTitle: 'Title of the Page',
@@ -41,6 +42,10 @@ app.use(express.static(path.join(__dirname, 'public'))); // serve static files f
 // Routes
 app.get(`/`, (req, res) => {
   res.render(`index`, parameters)
+});
+
+app.get(`/test`, (req, res) => {
+  res.render(`test`, parameters)
 });
 
 // Listener

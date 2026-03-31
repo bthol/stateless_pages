@@ -43,6 +43,8 @@ module.exports.renderStateless = renderStateless = (filePath, options, handler) 
                     }
                     if (!cont) {break};
                 }
+
+                console.log(keyStructure);
     
                 if (keyStructure.length > 0 && index + 2 < demarcatedLength) {
                     // is options
@@ -73,7 +75,7 @@ module.exports.renderStateless = renderStateless = (filePath, options, handler) 
                     for (let i = 0; i < keyStructure.length; i++) {
                         const key = keyStructure[i][0];
                         for (let j = 0; j < keyStructure[i][1]; j++) {
-                            render = render.replace(`${options.demarcator}${key}${options.demarcator}`, `${options[key]}`);
+                            render = render.replace(`${demarcator}${key}${demarcator}`, `${options[key]}`);
                         }
                     }
     
@@ -82,11 +84,13 @@ module.exports.renderStateless = renderStateless = (filePath, options, handler) 
                     return handler(null, render);
                     
                 } else {
-                    // isn't options
+                    // isn't options (not plural; only 1)
+                    const key = keyStructure[0][0];
+                    const render = stringed.replace(`${demarcator}${key}${demarcator}`, `${options[key]}`);
     
                     // send rendered content to handler
                     console.log('rendered');
-                    return handler(null, stringed);
+                    return handler(null, render);
                 }
 
             } else {
