@@ -1,6 +1,6 @@
 // Dependencies
-const bodyParser = require("body-parser");
 // const path = require('path'); // for static file directory "public"
+const bodyParser = require("body-parser");
 const express = require(`express`);
 const app = express();
 
@@ -17,48 +17,65 @@ if (renderPage) {
 
 // 2) configure stateless engine with express
 app.engine('slps', renderPage);
-console.log('Stateless Pages Engine configuration successful');
+console.log('Stateless Pages Engine configured');
 
 // 3) set stateless engine as default template engine for this express app
 app.set('view engine', 'slps');
 console.log('Stateless Pages Engine set as default template engine');
 
-// Test Data Structure
-const parameters = {
+// Server Configuration
 
-  // engine configuration parameters
-
-  demarcator: '#', // keep demarcator as a single character unique to syntax; default = '#'
-
-  // customizable document parameters
-
-  // test document (singular parameter template)
-  testParameter: 'If you can read this, the test has passed.',
-
-  // default page (plural parameter template)
-  title: 'Title', // controls tab name
-  websiteTitle: 'Website Title', // controls the title in the website header tag
-  pageTitle: 'Title of the Page', // controls the title at the top of the main tag
-  copyrightYear: '2026', // controls year data in copyright statement in footer tag
-  copyrightName: 'Blake Thollaug' // controls name data in copyright statement in footer tag
-};
+// Specify the views directory
+app.set('views', './views'); 
 
 //Middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // app.use(express.static(path.join(__dirname, 'public'))); // serve static files from the public directory
 
+// POST validation functionality
+const validate = (req) => {
+  // ensure that post request has valid properties for passing parameters
+  if ( Object.hasOwn(req.body, "parameters") ) {
+    if ( typeof(req.body.parameters) === "object" ) {
+      if ( Object.keys(req.body.parameters).length > 0 ) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
 // Routes
-app.get('/show', (req, res) => {
-  res.render(`index`, parameters)
+app.get('/hello-world', (req, res) => {
+  res.send('Hello World!')
 })
 
-app.get(`/`, (req, res) => {
-  res.redirect(307, '/show')
+app.get('/', (req, res) => {
+  // redirect status codes:
+  // 301 = permanent redirect
+  // 302 = temporary redirect
+  res.redirect(301, '/hello-world')
 })
 
 app.get('/test', (req, res) => {
-  res.render('test', parameters)
+  try {
+    res.render('test', {"testParameter": "If you can read this, the test has passed."})
+  } catch (error) {
+    throw new Error(error)
+  }
+})
+
+app.post('/test', (req, res, next) => {
+  if (validate(req)) {
+    try {
+      res.render('test', req.body.parameters)
+    } catch (error) {
+      next(error)
+    }
+  } else {
+    next('ERROR: POST request failed validation')
+  }
 })
 
 // Listener

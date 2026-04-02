@@ -3,11 +3,11 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
     
     // validate user arguments
     if (filePath === undefined || filePath === null || typeof(filePath) !== "string") {
-        return handler('invalid argument: filePath');
+        return handler('invalid argument -> filePath');
     } else if (options === undefined || options === null || typeof(options) !== "object") {
-        return handler('invalid argument: options');
+        return handler('invalid argument -> options');
     } else if (handler === undefined || handler === null || typeof(handler) !== "function") {
-        return handler('invalid argument: handler');
+        return handler('invalid argument -> handler');
     }
 
     // import file system module
@@ -20,8 +20,8 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
 
         // rendering logic
         const stringed = content.toString();
-        const demarcator = Object.hasOwn(options, "demarcator") ? options.demarcator : '#'; // use custom demarcator or falla back to default
-        const demarcated = stringed.split(`${options.demarcator}`);
+        const demarcator = Object.hasOwn(options, "demarcator") ? options.demarcator : '##'; // use custom demarcator or falla back to default
+        const demarcated = stringed.split(`${demarcator}`);
         const demarcatedLength = demarcated.length;
         if (demarcatedLength > 1) {
             // is key
@@ -37,16 +37,27 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
                     let cont = true;
                     for (const option in options) {
                         if (key === option) {
-                            keyStructure.push([key, 1]);
-                            cont = false;
-                            index = i;
-                            break;
+                            // run option value validation
+                            const value = options[option];
+                            if (typeof(value) === "string" && value.length > 0) {
+                                keyStructure.push([key, 1]);
+                                cont = false;
+                                index = i;
+                                break;
+                            }
                         }
                     }
                     if (!cont) {break};
                 }
-    
-                if (keyStructure.length > 0 && index + 2 < demarcatedLength) {
+
+                if (keyStructure.length === 0) {
+                    // no keys are options
+
+                    // send rendered content to handler
+                    console.log('rendered: no parameters, no problem');
+                    return handler(null, stringed);
+
+                } else if (index + 2 < demarcatedLength) {
                     // is options (plural options)
     
                     for (let i = index + 2; i < demarcatedLength; i += 2) {
@@ -64,8 +75,12 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
                             // prevent adding new keys that aren't options
                             for (const option in options) {
                                 if (key === option) {
-                                    keyStructure.push([key, 1]);
-                                    break;
+                                    // run option value validation
+                                    const value = options[option];
+                                    if (typeof(value) === "string" && value.length > 0) {
+                                        keyStructure.push([key, 1]);
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -98,7 +113,7 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
                 // over maximum 10,000 demarcators
 
                 // send rendered content to handler
-                console.log('rendered: over maximum of 10,000 demarcators');
+                console.log('rendered: exceeded maximum of 10,000 demarcators');
                 return handler(null, stringed);
             }
 

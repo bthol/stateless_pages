@@ -3,34 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#title#</title>
+    <title>##title##</title>
 </head>
 <body>
-    <header style="border-bottom: 1px solid black; padding: 8px 0px; display: flex; justify-content: space-between; align-items: center;">
-        <h2>#websiteTitle#</h2>
-        <div>
-            <button>button</button>
-            <button>button</button>
-            <button>button</button>
+    <header style="border-bottom: 1px solid black; padding: 8px 0px; display: flex; flex-direction: column;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>##websiteTitle##</h2>
+            <div style="display: flex; justify-content: space-between; gap: 1.5vw">
+                <button>contact</button>
+                <button>account</button>
+                <button>login</button>
+            </div>
         </div>
+        <nav style="display: flex; justify-content: center">
+            <div style="display: flex; justify-content: space-between; gap: 3.5vw">
+                <button>nav link</button>
+                <button>nav link</button>
+                <button>nav link</button>
+            </div>
+        </nav>
     </header>
     <div class="layout" style="display: grid; grid-template-columns: 1fr 3.5fr;">
         <aside style="border-right: 1px solid black; padding-right: 8px;border-radius: 0px 25px 0px 0px;">
-            <h3>label</h3>
+            <h3>Section label</h3>
             <div style="display: flex; flex-direction: column; gap: 8px;">
-                <button>button</button>
-                <button>button</button>
-                <button>button</button>
+                <button>page link</button>
+                <button>page link</button>
+                <button>page link</button>
             </div>
-            <h3>label</h3>
+            <h3>Section label</h3>
             <div style="display: flex; flex-direction: column; gap: 8px;">
-                <button>button</button>
-                <button>button</button>
-                <button>button</button>    
+                <button>page link</button>
+                <button>page link</button>
+                <button>page link</button>
             </div>
         </aside>
         <main style="padding-left: 8px;">
-            <h1>#pageTitle#</h1>
+            <h1>##pageTitle##</h1>
             <section>
                 <h2>Section Title</h2>
                 <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.</p>
@@ -41,7 +50,7 @@
     </div>
     <footer>
         <hr>
-        <center><small>&copy; #copyrightYear#, #copyrightName#. All rights reserved.</small></center>
+        <center><small>&copy; ##copyrightYear##, ##copyrightName##. All rights reserved.</small></center>
     </footer>
 
     <script defer>
