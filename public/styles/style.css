@@ -1,0 +1,22 @@
+body {
+    text-align: center;
+    background: black;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 8px 12px;
+}
+
+button {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: large;
+}
+
+nav {
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}

@@ -24,7 +24,7 @@
         </nav>
     </header>
     <div class="layout" style="display: grid; grid-template-columns: 1fr 3.5fr;">
-        <aside style="border-right: 1px solid black; padding-right: 8px;border-radius: 0px 25px 0px 0px;">
+        <aside style="border-right: 1px solid black; padding-right: 8px; ">
             <h3>Section label</h3>
             <div style="display: flex; flex-direction: column; gap: 8px;">
                 <button>page link</button>

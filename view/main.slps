@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stateless Pages</title>
+    <script defer src="./scripts/main.js"></script>
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Stateless Pages</h1>
+    </header>
+
+    <nav>
+        <button id="page-reset" type="button">reset</button>
+        <button id="default-1" type="button">page 1</button>
+    </nav>
+
+    <main></main>
+
+    <script>
+        const pageStrings = [
+            'default',
+        ];
+
+        const pageData = {
+            1: {
+                "title": "Tab Name",
+                "websiteTitle": "Website Name",
+                "pageTitle": "Title of the Page",
+                "copyrightYear": "2026", 
+                "copyrightName": "Blake Thollaug"
+            }
+        };
+
+        async function getPage(str = '', pageID) {
+            // prevent running on empty string
+            if (str === '') {return console.error('ERROR: empty string in hompage request')};
+            // match given string to at least one page string
+            let validString = false;
+            for (const string of pageStrings) {
+                if (str === string) {
+                    validString = true;
+                    break;
+                }
+            }
+            if (!validString) {return console.error('ERROR: unrecognized string in hompage request')};
+            // get page data
+            let data = {tempParams:{}};
+            if (Object.hasOwn(pageData), pageID) {
+                data.tempParams = pageData[pageID];
+            }
+            
+            // make post request with str route parameter and js data object
+            const response = await fetch(`http://localhost:2152/build/${str}`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data), // JS Object to JSON
+            });
+
+            
+            if (!response.ok) {
+                console.error(`HTTP error! status: ${response.status}`);
+            }
+
+            // return response
+            const file = document.createElement('embed');
+            file.setAttribute('type', 'application/pdf');
+            file.setAttribute('src', '/pdf/page.pdf');
+            file.setAttribute('width', '100%');
+            file.setAttribute('height', '600px');
+            // file.innerHTML = 'boop';
+            const content = document.querySelector('main');
+            content.innerHTML = '';
+            content.appendChild(file);
+        };
+
+        // event delegation for navigation
+        const nav = document.querySelector('nav');
+        nav.addEventListener('click', (event) => {
+            const ID = event.target.id;
+            if (ID !== '') {
+                if (ID === 'page-reset') {
+                    document.querySelector('main').innerHTML = '';
+                } else {
+                    const args = ID.split('-');
+                    if (args.length === 2) {
+                        getPage(args[0], args[1]);
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

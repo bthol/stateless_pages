@@ -27,7 +27,7 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
             // is key
 
             if (demarcatedLength - 1 < 10000) {
-                // under 10,000 maximum demarcators
+                // under 10,000 maximum demarcators (5,000 maximum keys)
 
                 // get first key that is an option
                 let keyStructure = [];
@@ -54,7 +54,7 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
                     // no keys are options
 
                     // send rendered content to handler
-                    console.log('rendered: no parameters, no problem');
+                    console.log('engine rendered: no parameters, no problem');
                     return handler(null, stringed);
 
                 } else if (index + 2 < demarcatedLength) {
@@ -95,7 +95,7 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
                     }
     
                     // send rendered content to handler
-                    console.log('rendered: with plural parameters');
+                    // console.log('rendered: with plural parameters');
                     return handler(null, render);
                     
                 } else {
@@ -105,7 +105,7 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
                     const render = stringed.replace(`${demarcator}${key}${demarcator}`, `${options[key]}`);
     
                     // send rendered content to handler
-                    console.log('rendered: with singular parameter');
+                    console.log('engine rendered: with singular parameter');
                     return handler(null, render);
                 }
 
@@ -113,7 +113,7 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
                 // over maximum 10,000 demarcators
 
                 // send rendered content to handler
-                console.log('rendered: exceeded maximum of 10,000 demarcators');
+                console.log('engine rendered: exceeded maximum of 10,000 demarcators');
                 return handler(null, stringed);
             }
 
@@ -121,7 +121,7 @@ module.exports.renderPage = renderPage = (filePath, options, handler) => {
             // isn't keys
 
             // send rendered content to handler
-            console.log('rendered: no keys, no problem');
+            console.log('engine rendered: no keys, no problem');
             return handler(null, stringed);
         }
     });

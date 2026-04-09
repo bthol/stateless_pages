@@ -2,6 +2,6 @@
 
 **Developer**: Blake Thollaug
 
-**Stack**: JavaScript, Express.js
+**Stack**: JavaScript, Express.js, Node.js
 
-**Description**: Stateless Pages is a template engine for express.js that serves pages as images instead of as embedded elements for reasons of informational security.
+**Description**: Stateless Pages is an express server with a custom template engine that can serve pages as a file.
